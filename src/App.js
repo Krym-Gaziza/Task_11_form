@@ -1,25 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import RegistrationForm from './components/RegistrationForm';
+import { CREATE_USER } from './graphql/mutations';
 
-function App() {
+const App = () => {
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch('https://66388bc64253a866a24e2f2c.mockapi.io/api/v2/Users', CREATE_USER(data));
+      const newUser = await response.json();
+      console.log(newUser);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Registration Form</h1>
+      <RegistrationForm onSubmit={onSubmit} />
     </div>
   );
-}
+};
+
 
 export default App;
